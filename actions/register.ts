@@ -2,6 +2,8 @@
 // equivalent to api route...
 import * as z from "zod";
 import { RegisterSchema} from "@/schemas";
+import bcrypt from "bcrypt";
+import {db} from "@/lib/db";
 
 export const register = async (values : z.infer<typeof RegisterSchema> ) => {
     // validate the fields
@@ -9,5 +11,25 @@ export const register = async (values : z.infer<typeof RegisterSchema> ) => {
     if(!validatedFields.success){
         return {error: "Invalid fields!"};
     }
-    return { success: "Valid fields!"};
+    const {name, email , password} = validatedFields.data;
+    // hashing the password
+    const hashedPassword = await  bcrypt.hash(password, 10);
+    // check if the email is taken
+    const existingUser = await  db.user.findUnique({
+        where: { email, }
+    });
+    if(existingUser){
+        return ({error: "Email is already in use"});
+    }
+    // if email dosent exist the add user to db
+    await  db.user.create({
+        data:{
+            name,
+            email,
+            password:hashedPassword
+        }
+    });
+    // TODO: Send verification token email...
+
+    return { success: "User Created successfully!"};
 };
