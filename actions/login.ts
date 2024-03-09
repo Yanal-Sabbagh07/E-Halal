@@ -12,7 +12,6 @@ export const login = async (values : z.infer<typeof LoginSchema> ) => {
     if(!validatedFields.success){
         return {error: "Invalid fields!"};
     }
-    // return { success: "Valid fields!"};
     const {email, password} = validatedFields.data;
     try {
         await signIn("credentials",{
@@ -20,6 +19,7 @@ export const login = async (values : z.infer<typeof LoginSchema> ) => {
             password,
             redirectTo: DEFAULT_LOGIN_REDIRECT,
         });
+        return { success: "Valid fields!"};
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
