@@ -6,16 +6,19 @@ export default auth((req) => {
     const {nextUrl} = req;
     const isLoggedIn = !!req.auth;
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-    console.log("isApiAuthRoute",isApiAuthRoute);
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-    console.log("isPublicRoute",isPublicRoute);
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-    console.log("isAuthRoute",isAuthRoute);
+    const isLinkedWithOtherProvider = nextUrl.search.endsWith("OAuthAccountNotLinked");
+    console.log("nextUrl:",nextUrl.search)
     if(isApiAuthRoute) {
+        if(nextUrl.search && isLinkedWithOtherProvider) {
+            return Response.redirect(new URL(`/auth/login${nextUrl.search} `, nextUrl));
+        }
         return;
     }
 
     if(isAuthRoute) {
+
         if(isLoggedIn) {
             return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
         }
