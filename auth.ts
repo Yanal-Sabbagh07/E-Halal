@@ -22,14 +22,16 @@ export const {
         }
     },
     callbacks: {
-        // async signIn({user}) {
-        //     if(!user.id) return false;
-        //     const existingUser = await getUserById(user.id);
-        //     if(!existingUser || !existingUser.emailVerified){
-        //         return false;
-        //     }
-        //     return true;
-        // },
+        async signIn({user, account}) {
+            // allow OAuth without email verification
+            if (account?.provider !== "credentials") return true;
+            if (!user.id) return false;
+            const existingUser = await getUserById(user.id);
+            // prevent signin without email verification
+            if (!existingUser?.emailVerified) return false;
+            //TODO: Add 2FA check
+            return true;
+        },
         async session ({token, session}) {
             console.log({sessionToken: token});
             if(token.sub && session.user) {
