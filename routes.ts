@@ -1,5 +1,5 @@
 /**
- *An arry of routes that are accessible to the public
+ *An array of routes that are accessible to the public
  * These routes do not require authentication
  * @types {string[]}
  */
@@ -11,19 +11,20 @@ export  const publicRoutes = [
 ];
 
 /**
- *An arry of routes that are used for authentication
- * These routes will redirect logged in users to /settings
+ *An array of routes that are used for authentication
+ * These routes will redirect logged-in users to /settings
  * @types {string[]}
  */
 export const authRoutes = [
     "/auth/login",
     "/auth/register",
-    "/auth/error"
+    "/auth/error",
+    "/auth/reset"
 ];
 
 /**
  *The prefix for API authentication routes
- * routes that starts with this prefix are used for Api authentication purposes
+ *that starts with this prefix are used for Api authentication purposes
  * @types {string[]}
  */
 export const apiAuthPrefix = "/api/auth";

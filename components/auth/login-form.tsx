@@ -15,6 +15,7 @@ import {Button} from "@/components/ui/button";
 import {FormError} from "@/components/form-error";
 import {FormSuccess} from "@/components/form-success";
 import {login} from "@/actions/login";
+import Link from "next/link";
 
 const LoginForm = () => {
     const searchParams = useSearchParams();
@@ -81,6 +82,9 @@ const LoginForm = () => {
                                             disabled={isPending}
                                         />
                                     </FormControl>
+                                    <Button size={"sm"} variant={"link"} asChild className={"px-0 font-normal"}>
+                                        <Link href={"/auth/reset"}> Forgot your Password?</Link>
+                                    </Button>
                                     <FormMessage />
                                 </FormItem>
                             )}
