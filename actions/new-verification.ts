@@ -9,10 +9,12 @@ export const newVerification = async (token: string) => {
     if(!existingToken){
         return {error: "Token dose not exist!"}
     }
+
     const tokenHasExpired = new Date(existingToken.expires) < new Date();
     if (tokenHasExpired) {
         return { error : "tocken has expired!" };
     }
+
     const existingUser = await getUserByEmail(existingToken.email);
     if (!existingUser){
         return {error : "Email does not exist! "};
@@ -26,9 +28,10 @@ export const newVerification = async (token: string) => {
         }
     });
 
-    await db.verificationToken.delete({
-        where : {id : existingToken.id}
-    });
+    // TODO: Activate on Deployment because it makes problems in Development
+    // await db.verificationToken.delete({
+    //     where : {id : existingToken.id}
+    // });
 
     return { success : "Email verified!"};
 }
