@@ -15,7 +15,7 @@ export const {
     signOut,
 } = NextAuth({
     events: {
-        async linkAccount({user}) {
+        async linkAccount({user } ) {
             await db.user.update ({
                 where: {id : user.id},
                 data:{emailVerified: new Date()}
@@ -53,6 +53,9 @@ export const {
             if(token.role && session.user) {
                 session.user.role = token.role as  UserRole;
             }
+            if(session.user) {
+                session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+            }
             return session;
         },
         async jwt({token}) {
@@ -64,6 +67,7 @@ export const {
                 return token;
             }
             token.role = existingUser.role;
+            token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
             return token;
         }
     },

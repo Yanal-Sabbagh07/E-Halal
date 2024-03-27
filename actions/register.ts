@@ -22,7 +22,7 @@ export const register = async (values : z.infer<typeof RegisterSchema> ) => {
     if(existingUser){
         return ({error: "Email is already in use"});
     }
-    // if email dosent exist the add user to db
+    // if email does not exist the add user to db
     await  db.user.create({
         data:{
             name,
