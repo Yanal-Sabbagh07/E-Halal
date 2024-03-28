@@ -1,13 +1,29 @@
 "use client";
 
-import {useCurrentUser} from "@/hooks/use-current-user";
+import {Card, CardContent, CardHeader} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
+import {settings} from "@/actions/settings";
+import {useTransition} from "react";
+import {useSession} from "next-auth/react";
 const SettingsPage =  () => {
-    // const user = useCurrentUser();
-
+    const { update } = useSession();
+    const [isPending, startTransition] = useTransition();
+    const updateName = () => {
+        startTransition(() =>  {
+            settings({name : "Yanal Sabbagh"}).then(() => update());
+        });
+    }
     return (
-        <div>
-            {/*{JSON.stringify(user)}*/}
-        </div>
+        <Card className={"w-[90%]"}>
+            <CardHeader>
+                <p className={"text-2xl text-center font-semibold"}>Settings</p>
+            </CardHeader>
+            <CardContent>
+                <Button disabled={isPending} onClick={updateName}>
+                    Update Name
+                </Button>
+            </CardContent>
+        </Card>
     );
 };
 

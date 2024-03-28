@@ -19,3 +19,7 @@ export const ResetSchema = z.object({
 export const NewPasswordSchema = z.object({
     password: z.string().min(8,{message: "Minimum of 8 characters required!"}),
 });
+
+export const SettingSchema = z.object({
+    name: z.optional(z.string()),
+})
