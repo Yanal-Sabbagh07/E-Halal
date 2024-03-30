@@ -3,7 +3,6 @@
 import * as z from "zod";
 import { LoginSchema} from "@/schemas";
 import {signIn} from "@/auth";
-import {DEFAULT_LOGIN_REDIRECT} from "@/routes";
 import {AuthError} from "next-auth";
 import {generateTwoFactorToken, generateVerificationToken} from "@/lib/tokens";
 import {getUserByEmail} from "@/data/user";
@@ -63,7 +62,7 @@ export const login = async (values : z.infer<typeof LoginSchema> ) => {
         await signIn("credentials",{
             email,
             password,
-            redirectTo: DEFAULT_LOGIN_REDIRECT,
+            // redirectTo: role === UserRole.CUSTOMER ? DEFAULT_CUSTOMER_LOGIN_REDIRECT : role === UserRole.SELLER ? DEFAULT_SELLER_LOGIN_REDIRECT : DEFAULT_CUSTOMER_LOGIN_REDIRECT,
         });
         return { success: "Valid fields!"};
     } catch (error) {
