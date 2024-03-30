@@ -3,11 +3,14 @@
 import React from 'react';
 import {UserInfo} from "@/components/user-info";
 import {useCurrentUser} from "@/hooks/use-current-user";
+import {MaxWidthWrapper} from "@/components/max-width-wrapper";
 
 const ClientPage = () => {
     const user = useCurrentUser();
     return (
-        <UserInfo label={"Client Page!"} user={user} />
+        <MaxWidthWrapper>
+            <UserInfo label={"Client Page!"} user={user}/>
+        </MaxWidthWrapper>
     );
 };
 
