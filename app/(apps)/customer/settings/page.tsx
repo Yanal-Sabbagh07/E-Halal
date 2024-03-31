@@ -14,9 +14,8 @@ import {Input} from "@/components/ui/input";
 import {useCurrentUser} from "@/hooks/use-current-user";
 import {FormError} from "@/components/form-error";
 import {FormSuccess} from "@/components/form-success";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-import {UserRole} from "@prisma/client";
 import {Switch} from "@/components/ui/switch";
+import {MaxWidthWrapper} from "@/components/max-width-wrapper";
 
 const SettingsPage = () => {
     const user = useCurrentUser();
@@ -50,10 +49,10 @@ const SettingsPage = () => {
         });
     }
     return (
-        <div className={"w-[calc(100%-300px)]"}>
+        <MaxWidthWrapper>
             <Card >
                 <CardHeader>
-                    <p className={"text-2xl text-center font-semibold"}>⚙️ Admin Settings</p>
+                    <p className={"text-2xl text-center font-semibold"}>⚙️ Customer Settings</p>
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
@@ -86,6 +85,7 @@ const SettingsPage = () => {
                                                                disabled={isPending} {...field}
                                                                type={"email"}
                                                                autoComplete={"none"}
+                                                               readOnly
                                                         />
                                                     </FormControl>
                                                     <FormMessage/>
@@ -144,38 +144,6 @@ const SettingsPage = () => {
                                             )}
                                         />
                                     </>)}
-                                <FormField
-                                    control={form.control}
-                                    name="role"
-                                    render={({field}) => (
-                                        <FormItem>
-                                            <FormLabel>Role</FormLabel>
-                                            <Select
-                                                disabled={isPending}
-                                                onValueChange={field.onChange}
-                                                defaultValue={field.value}
-                                            >
-                                                <FormControl>
-                                                    <SelectTrigger>
-                                                        <SelectValue placeholder="Select a role"/>
-                                                    </SelectTrigger>
-                                                </FormControl>
-                                                <SelectContent>
-                                                    <SelectItem value={UserRole.ADMIN}>
-                                                        Admin
-                                                    </SelectItem>
-                                                    <SelectItem value={UserRole.SELLER}>
-                                                        Seller
-                                                    </SelectItem>
-                                                    <SelectItem value={UserRole.CUSTOMER}>
-                                                        Customer
-                                                    </SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                            <FormMessage/>
-                                        </FormItem>
-                                    )}
-                                />
                             </div>
                             <FormError message={error}/>
                             <FormSuccess message={success}/>
@@ -184,7 +152,7 @@ const SettingsPage = () => {
                     </Form>
                 </CardContent>
             </Card>
-        </div>
+        </MaxWidthWrapper>
     );
 };
 
