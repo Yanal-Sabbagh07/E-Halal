@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import {UserItem} from "@/app/(protected)/admin/_components/user-item";
-import SideBarMenu from "@/app/(protected)/admin/_components/menu";
+import {UserItem} from "@/app/(apps)/admin/_components/user-item";
+import SideBarMenu from "@/app/(apps)/admin/_components/menu";
 
 export const SideBar = () => {
     return (

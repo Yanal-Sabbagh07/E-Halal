@@ -17,7 +17,6 @@ import {FormSuccess} from "@/components/form-success";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {UserRole} from "@prisma/client";
 import {Switch} from "@/components/ui/switch";
-import {MaxWidthWrapper} from "@/components/max-width-wrapper";
 
 const SettingsPage = () => {
     const user = useCurrentUser();
@@ -51,10 +50,10 @@ const SettingsPage = () => {
         });
     }
     return (
-        <MaxWidthWrapper>
+        <div className={"w-full"}>
             <Card >
                 <CardHeader>
-                    <p className={"text-2xl text-center font-semibold"}>⚙️ Customer Settings</p>
+                    <p className={"text-2xl text-center font-semibold"}>⚙️ Admin Settings</p>
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
@@ -87,7 +86,6 @@ const SettingsPage = () => {
                                                                disabled={isPending} {...field}
                                                                type={"email"}
                                                                autoComplete={"none"}
-                                                               readOnly
                                                         />
                                                     </FormControl>
                                                     <FormMessage/>
@@ -186,7 +184,7 @@ const SettingsPage = () => {
                     </Form>
                 </CardContent>
             </Card>
-        </MaxWidthWrapper>
+        </div>
     );
 };
 
