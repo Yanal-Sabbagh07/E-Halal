@@ -7,7 +7,6 @@
 export  const publicRoutes = [
     "/",
     "/auth/new-verification"
-
 ];
 
 /**
@@ -29,12 +28,14 @@ export const authRoutes = [
  * @types {string[]}
  */
 export const apiAuthPrefix = "/api/auth";
-
+export const adminPrefix = "/admin";
+export const sellerPrefix = "/seller";
+export const customerPrefix = "/customer";
 /**
  *The default redirect path after logging in
  * @types {string[]}
  */
 export const DEFAULT_ADMIN_LOGIN_REDIRECT = "/admin/dashboard";
-export const DEFAULT_SELLER_LOGIN_REDIRECT = "/seller/server";
-export const DEFAULT_CUSTOMER_LOGIN_REDIRECT = "/customer/server";
+export const DEFAULT_SELLER_LOGIN_REDIRECT = "/seller/settings";
+export const DEFAULT_CUSTOMER_LOGIN_REDIRECT = "/customer/settings";
 //

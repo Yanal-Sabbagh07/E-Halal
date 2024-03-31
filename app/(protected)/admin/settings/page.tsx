@@ -86,7 +86,6 @@ const SettingsPage = () => {
                                                                disabled={isPending} {...field}
                                                                type={"email"}
                                                                autoComplete={"none"}
-                                                               readOnly
                                                         />
                                                     </FormControl>
                                                     <FormMessage/>
@@ -101,7 +100,7 @@ const SettingsPage = () => {
                                                     <FormLabel>Password</FormLabel>
                                                     <FormControl>
                                                         <Input placeholder={"********"} disabled={isPending} {...field}
-                                                               type={"password"} autoComplete={"none"}/>
+                                                               type={"password"} autoComplete={"new-password"}/>
                                                     </FormControl>
                                                     <FormMessage/>
                                                 </FormItem>

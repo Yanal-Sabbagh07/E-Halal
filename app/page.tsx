@@ -10,7 +10,7 @@ export default function Home() {
                 Your Halal market place for shopping!
             </p>
             <div>
-                <LoginButton>
+                <LoginButton mode={"modal"} asChild>
                     <Button variant={"secondary"} className={"text-lg"}>Sign in</Button>
                 </LoginButton>
             </div>

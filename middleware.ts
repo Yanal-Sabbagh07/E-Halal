@@ -4,7 +4,12 @@ import {
     DEFAULT_ADMIN_LOGIN_REDIRECT,
     apiAuthPrefix,
     authRoutes,
-    publicRoutes, DEFAULT_SELLER_LOGIN_REDIRECT, DEFAULT_CUSTOMER_LOGIN_REDIRECT
+    publicRoutes,
+    DEFAULT_SELLER_LOGIN_REDIRECT,
+    DEFAULT_CUSTOMER_LOGIN_REDIRECT,
+    adminPrefix,
+    sellerPrefix,
+    customerPrefix
 } from "@/routes"
 import {UserRole} from "@prisma/client";
 import {currentRole} from "@/lib/auth";
@@ -16,6 +21,9 @@ export default  auth(async (req) => {
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+    const isAdminRoute = nextUrl.pathname.startsWith(adminPrefix);
+    const isSellerRoute = nextUrl.pathname.startsWith(sellerPrefix);
+    const isCustomerRoute = nextUrl.pathname.startsWith(customerPrefix);
     const isLinkedWithOtherProvider = nextUrl.search.endsWith("OAuthAccountNotLinked");
     const role = await currentRole();
     if (isApiAuthRoute) {
@@ -25,7 +33,7 @@ export default  auth(async (req) => {
         return;
     }
 
-    if (isAuthRoute) {
+    if (isAuthRoute || isPublicRoute) {
         if (isLoggedIn) {
             if (role === UserRole.ADMIN) {
                 return Response.redirect(new URL(DEFAULT_ADMIN_LOGIN_REDIRECT, nextUrl));
@@ -36,13 +44,21 @@ export default  auth(async (req) => {
             if(role === UserRole.CUSTOMER){
                 return Response.redirect(new URL(DEFAULT_CUSTOMER_LOGIN_REDIRECT, nextUrl));
             }
-
         }
         return;
     }
 
     if (!isLoggedIn && !isPublicRoute) {
         return Response.redirect(new URL("/auth/login", nextUrl));
+    }
+    if (isLoggedIn && role === UserRole.ADMIN && !isAdminRoute){
+        return Response.redirect(new URL(DEFAULT_ADMIN_LOGIN_REDIRECT, nextUrl));
+    }
+    if (isLoggedIn && role === UserRole.SELLER && !isSellerRoute){
+        return Response.redirect(new URL(DEFAULT_SELLER_LOGIN_REDIRECT, nextUrl));
+    }
+    if (isLoggedIn && role === UserRole.CUSTOMER && !isCustomerRoute){
+        return Response.redirect(new URL(DEFAULT_CUSTOMER_LOGIN_REDIRECT, nextUrl));
     }
     return;
 });
