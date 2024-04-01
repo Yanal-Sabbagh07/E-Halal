@@ -20,16 +20,10 @@ export function MainNav({className, ...props}: React.HTMLAttributes<HTMLElement>
                 Overview
             </Link>
             <Link
-                href="/admin/sellers"
-                className={`${pathname === "/admin/sellers" ? "" :"text-muted-foreground"} text-sm font-medium   transition-colors hover:text-primary`}
+                href="/admin/users"
+                className={`${pathname === "/admin/users" ? "" :"text-muted-foreground"} text-sm font-medium   transition-colors hover:text-primary`}
             >
-                Sellers
-            </Link>
-            <Link
-                href="/admin/customers"
-                className={`${pathname === "/admin/customers" ? "" :"text-muted-foreground"} text-sm font-medium   transition-colors hover:text-primary`}
-            >
-                Customers
+                Users
             </Link>
             <Link
                 href="/admin/products"

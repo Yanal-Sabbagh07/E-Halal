@@ -17,13 +17,21 @@ export const getUserById = async (id: string) => {
     }
 };
 
-export const fetchUsers = async (role: UserRole) => {
+export const getUsersByRole = async (role: UserRole) => {
     try {
         return await db.user.findMany({
             where: {
                 role,
             }
         });
+    } catch {
+        throw new Error("Failed to fetch the users!")
+    }
+};
+
+export const getAllUsers = async () => {
+    try {
+        return await db.user.findMany();
     } catch {
         throw new Error("Failed to fetch the users!")
     }
