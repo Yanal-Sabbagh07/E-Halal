@@ -2,15 +2,15 @@ import * as z from "zod";
 import {UserRole} from "@prisma/client";
 
 export const LoginSchema = z.object({
-    email: z.string().email({message:"Email is required"}),
-    password: z.string().min(1,{message:"Password is required"}),
+    email: z.string().email({message: "Email is required"}),
+    password: z.string().min(1, {message: "Password is required"}),
     code: z.optional(z.string()),
 });
 
 export const RegisterSchema = z.object({
     name: z.string().min(1, "Full name"),
-    email: z.string().email({message:"Email is required"}),
-    password: z.string().min(8,{message:"Minimum 8 characters required"}),
+    email: z.string().email({message: "Email is required"}),
+    password: z.string().min(8, {message: "Minimum 8 characters required"}),
 });
 
 export const ResetSchema = z.object({
@@ -18,7 +18,7 @@ export const ResetSchema = z.object({
 });
 
 export const NewPasswordSchema = z.object({
-    password: z.string().min(8,{message: "Minimum of 8 characters required!"}),
+    password: z.string().min(8, {message: "Minimum of 8 characters required!"}),
 });
 
 export const SettingSchema = z.object({
@@ -35,10 +35,20 @@ export const SettingSchema = z.object({
     return true;
 }, {
     message: "new password si required!",
-    path: ["newPassword"]})
+    path: ["newPassword"]
+})
     .refine((data) => {
-    if (data.newPassword && !data.password) {
-        return false;
-    }
-    return true;
-}, {message: "password is required!", path: ["password"]});
+        if (data.newPassword && !data.password) {
+            return false;
+        }
+        return true;
+    }, {message: "password is required!", path: ["password"]});
+
+export const addStoreSchema = z.object( {
+   name: z.string().min(1,"Store Name")
+});
+
+export const assignSellerSchema = z.object({
+    userId: z.string().min(1),
+    storeId: z.string().min(1)
+})

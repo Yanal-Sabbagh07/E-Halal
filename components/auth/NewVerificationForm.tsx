@@ -32,6 +32,7 @@ export const NewVerificationForm = () => {
 
     return (
         <CardWrapper
+            headerTitle={"Verifying"}
             headerLabel="Confirming your verification"
             backButtonLabel="Back to Login"
             backButtonHref="/auth/login"

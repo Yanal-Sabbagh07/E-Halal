@@ -39,7 +39,7 @@ const NewPasswordForm = () => {
         });
     };
     return (
-        <CardWrapper headerLabel={"Enter a new password"} backButtonLabel={"Back to login"} backButtonHref={"/auth/login"} >
+        <CardWrapper headerTitle={"Request New Password"} headerLabel={"Enter a new password"} backButtonLabel={"Back to login"} backButtonHref={"/auth/login"} >
             <Form {...form}>
                 <form className={"space-y-6"} onSubmit={form.handleSubmit(onSubmit)}>
                     <div className={"space-y-4"}>

@@ -54,7 +54,7 @@ const LoginForm = () => {
         });
     };
     return (
-        <CardWrapper headerLabel={"Welcome back"} backButtonLabel={"Don't have an account?"} backButtonHref={"/auth/register"} showSocial>
+        <CardWrapper headerTitle={"Halal Shopping"} headerLabel={"Welcome back"} backButtonLabel={"Don't have an account?"} backButtonHref={"/auth/register"} showSocial>
             <Form {...form}>
                 <form
                     className={"space-y-6"}
