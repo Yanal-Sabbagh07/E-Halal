@@ -1,6 +1,6 @@
 import React from "react";
 import {SessionProvider} from "next-auth/react";
-import {SideBar} from "@/app/(apps)/admin/_components/sidebar";
+import {SideBar} from "@/app/(apps)/admin/components/sidebar";
 import {MaxWidthWrapper} from "@/components/max-width-wrapper";
 import {StoreSwitcher} from "@/app/(apps)/admin/dashboard/components/store-switcher";
 import {MainNav} from "@/app/(apps)/admin/dashboard/components/main-nav";
