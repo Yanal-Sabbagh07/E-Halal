@@ -84,7 +84,7 @@ const Users = async () => {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {users.map((user) => (
+                                        {users?.map((user) => (
                                             <TableRow key={user.id}>
                                                 <TableCell className="hidden sm:table-cell">
                                                     <Image
@@ -168,7 +168,7 @@ const Users = async () => {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {admins.map((admin) => (
+                                        {admins?.map((admin) => (
                                             <TableRow key={admin.id}>
                                                 <TableCell className="hidden sm:table-cell">
                                                     <Image
@@ -252,7 +252,7 @@ const Users = async () => {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {sellers.map((seller) => (
+                                        {sellers?.map((seller) => (
                                             <TableRow key={seller.id}>
                                                 <TableCell className="hidden sm:table-cell">
                                                     <Image
@@ -336,7 +336,7 @@ const Users = async () => {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {customers.map((customer) => (
+                                        {customers?.map((customer) => (
                                             <TableRow key={customer.id}>
                                                 <TableCell className="hidden sm:table-cell">
                                                     <Image

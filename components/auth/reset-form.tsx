@@ -37,7 +37,7 @@ const ResetForm = () => {
         });
     };
     return (
-        <CardWrapper headerLabel={"Forgot your password?"} backButtonLabel={"Back to login"} backButtonHref={"/auth/login"} >
+        <CardWrapper headerTitle={"Forgot your password?"} headerLabel={"We will send you an email to reset it"} backButtonLabel={"Back to login"} backButtonHref={"/auth/login"} >
             <Form {...form}>
                 <form className={"space-y-6"} onSubmit={form.handleSubmit(onSubmit)}>
                     <div className={"space-y-4"}>

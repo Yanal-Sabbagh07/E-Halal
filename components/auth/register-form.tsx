@@ -35,7 +35,7 @@ const RegisterForm = () => {
         });
     };
     return (
-        <CardWrapper headerLabel={"Welcome To Halal"} backButtonLabel={"Already have an account?"} backButtonHref={"/auth/login"} showSocial>
+        <CardWrapper headerTitle={"Halal Shopping"} headerLabel={"Welcome To Halal"} backButtonLabel={"Already have an account?"} backButtonHref={"/auth/login"} showSocial>
             <Form {...form}>
                 <form
                     className={"space-y-6"}
