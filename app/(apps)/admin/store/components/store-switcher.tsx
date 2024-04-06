@@ -26,7 +26,7 @@ export function StoreSwitcher({className, stores}: StoreSwitcherProps) {
         storeId = getStoreId[1];
     }
     const [open, setOpen] = React.useState(false);
-    const currentStore = stores.find((store) => store.id === storeId);
+    const currentStore = stores.find((store) => storeId === store.id);
     const [selectedStore, setSelectedStore] = React.useState({name: currentStore?.name, id: storeId});
     return (
         <>
