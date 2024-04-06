@@ -49,7 +49,6 @@ export const getUserStoresByUserId = async (id: string) => {
         if(userStores.length === 0 ){
             return null;
         }
-        console.log("userstores",userStores)
         const storesIds = userStores.map(userStoreId => userStoreId.storeId);
         const stores : IStores[]  = await Promise.all( storesIds.map(async (id) => {
             if(!id){
