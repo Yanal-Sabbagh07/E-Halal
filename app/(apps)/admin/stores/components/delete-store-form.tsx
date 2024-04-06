@@ -11,10 +11,7 @@ import {Input} from "@/components/ui/input";
 import {FormError} from "@/components/form-error";
 import {FormSuccess} from "@/components/form-success";
 import {Button} from "@/components/ui/button";
-import {useRouter} from "next/navigation";
-
 export const DeleteStoreForm = ({id, name}: { id: string, name: string }) => {
-    const router = useRouter();
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
@@ -32,7 +29,8 @@ export const DeleteStoreForm = ({id, name}: { id: string, name: string }) => {
                 setSuccess(data.success);
             });
         });
-        router.refresh();
+        // router.refresh(); // Deleted the Store and closed the dialog
+        window.location.assign("/admin/stores");
     };
     return (
         <CardWrapper

@@ -11,11 +11,9 @@ import {Input} from "@/components/ui/input";
 import {FormError} from "@/components/form-error";
 import {FormSuccess} from "@/components/form-success";
 import {Button} from "@/components/ui/button";
-import {useRouter} from "next/navigation";
 
 
 export const AddStoreForm = () => {
-    const router = useRouter();
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
@@ -33,7 +31,8 @@ export const AddStoreForm = () => {
                 setSuccess(data.success);
             });
         });
-        router.push(`/admin/store/${storeId}/dashboard`);
+        window.location.assign(`/admin/store/${storeId}/dashboard`);
+        // router.push(`/admin/store/${storeId}/dashboard`); // another way of rdirecting but not 100% reliable
     };
     return (
         <CardWrapper headerTitle={"New Store"} headerLabel={"Add a new store"} backButtonLabel={"Back to Dashboard"} backButtonHref={"/admin/dashboard"} >
