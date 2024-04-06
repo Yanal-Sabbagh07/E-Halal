@@ -48,7 +48,7 @@ export const AddStore = () => {
                                     <FormControl>
                                         <Input
                                             {...field}
-                                            placeholder={"Damascus Zentrum"}
+                                            placeholder={"Store Name"}
                                             type="name"
                                             disabled={isPending}
                                         />

@@ -7,7 +7,9 @@ import {usePathname} from "next/navigation";
 
 export function MainNav({className, ...props}: React.HTMLAttributes<HTMLElement>) {
 
+
     const pathname = usePathname();
+    const singleStorePath = pathname.match(/^\/admin\/stores\/(\d+)/);
     return (
         <nav
             className={cn("flex items-center space-x-4 lg:space-x-6", className)}
@@ -20,8 +22,8 @@ export function MainNav({className, ...props}: React.HTMLAttributes<HTMLElement>
                 Overview
             </Link>
             <Link
-                href="/admin/stores"
-                className={`${pathname === "/admin/stores" ? "" :"text-muted-foreground"} text-sm font-medium   transition-colors hover:text-primary`}
+                href={`${pathname === singleStorePath?.input ? "" : "/admin/stores"}`}
+                className={`${pathname === "/admin/stores" || pathname === singleStorePath?.input ? "" :"text-muted-foreground"} text-sm font-medium   transition-colors hover:text-primary`}
             >
                 Stores
             </Link>

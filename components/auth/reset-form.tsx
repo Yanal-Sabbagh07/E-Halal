@@ -29,7 +29,6 @@ const ResetForm = () => {
         setError("");
         setSuccess("");
         startTransition(()=>{
-            console.log(values);
             reset(values).then((data)=>{
                 setError(data?.error);
                 setSuccess(data?.success);
