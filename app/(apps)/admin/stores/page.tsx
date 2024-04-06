@@ -18,6 +18,7 @@ import {getUserStoresByUserId} from "@/data/user";
 import {currentUserId} from "@/lib/auth";
 import {redirect} from "next/navigation";
 import Link from "next/link";
+import {DeleteStoreMenuItem} from "@/app/(apps)/admin/stores/components/delete-store-menu-item";
 
 
 const Users = async () => {
@@ -129,7 +130,7 @@ const Users = async () => {
                                                     <DropdownMenuContent align="end">
                                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                                         <DropdownMenuItem>Edit</DropdownMenuItem>
-                                                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                                                        <DeleteStoreMenuItem name={store.name} id={store.id} />
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </TableCell>

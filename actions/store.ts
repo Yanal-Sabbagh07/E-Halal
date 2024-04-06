@@ -1,6 +1,6 @@
 "use server";
 import {z} from "zod";
-import {addStoreSchema} from "@/schemas";
+import {addStoreSchema, deleteStoreSchema} from "@/schemas";
 import {db} from "@/lib/db";
 
 export const addStore = async (values: z.infer<typeof addStoreSchema>) => {
@@ -8,12 +8,12 @@ export const addStore = async (values: z.infer<typeof addStoreSchema>) => {
     if (!validatedFields.success) {
         return {error: "Invalid fields!"};
     }
-    const {name} = validatedFields.data;
-    const storeId = Date.now().toString();
+    const {id,name} = validatedFields.data;
+    // const storeId = Date.now().toString();
     try {
         await db.store.create({
             data: {
-                id:storeId,
+                id:id,
                 name,
             }
         });
@@ -25,7 +25,7 @@ export const addStore = async (values: z.infer<typeof addStoreSchema>) => {
     try {
         await db.usersStores.create({
             data: {
-                storeId,
+                storeId:id,
             }
         })
     } catch {
@@ -33,3 +33,23 @@ export const addStore = async (values: z.infer<typeof addStoreSchema>) => {
     }
     return {success: "Store Created!"}
 }
+
+export const deleteStore = async (values: z.infer<typeof deleteStoreSchema>) =>{
+    const validatedFields = deleteStoreSchema.safeParse(values);
+    if (!validatedFields.success) {
+        return {error: "Invalid fields!"};
+    }
+    const {id} = validatedFields.data;
+    try {
+        await db.store.delete({
+            where: {
+                id,
+            }
+        });
+    } catch {
+        return {
+            error: "Couldn't delete the store"
+        }
+    }
+    return {success: "Store Deleted!"}
+};

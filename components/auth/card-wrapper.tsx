@@ -13,12 +13,13 @@ interface  CardWrapperProps {
     backButtonLabel: string;
     backButtonHref: string;
     showSocial?: boolean;
+    destructive?: boolean;
 }
-const CardWrapper = ({children,headerLabel,backButtonLabel,backButtonHref,showSocial, headerTitle}:CardWrapperProps) => {
+const CardWrapper = ({children,headerLabel,backButtonLabel,backButtonHref,showSocial, headerTitle, destructive}:CardWrapperProps) => {
     return (
         <Card className={"w-[400px] shadow-md "}>
             <CardHeader >
-                <Header header={headerTitle}  label={headerLabel}/>
+                <Header header={headerTitle}  label={headerLabel} destructive = {destructive}/>
             </CardHeader>
             <CardContent>
                 {children}

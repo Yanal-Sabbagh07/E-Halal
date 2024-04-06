@@ -36,9 +36,9 @@ model Store {
 }
 
 model UsersStores {
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String   @default("cluempynl0000ej1054ejwwc0")// relation scalar field (used in the `@relation` attribute above)
-  store      Store    @relation(fields: [storeId], references: [id])
+  store      Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
   storeId    String   // relation scalar field (used in the `@relation` attribute above)
   createdAt DateTime  @default(now())
 

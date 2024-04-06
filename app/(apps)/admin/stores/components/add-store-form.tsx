@@ -11,15 +11,18 @@ import {Input} from "@/components/ui/input";
 import {FormError} from "@/components/form-error";
 import {FormSuccess} from "@/components/form-success";
 import {Button} from "@/components/ui/button";
+import {useRouter} from "next/navigation";
 
-export const AddStore = () => {
+
+export const AddStoreForm = () => {
+    const router = useRouter();
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
-
-    const form = useForm<z.infer<typeof addStoreSchema>>({
+    const [storeId] = useState(Date.now());
+    const formInstance = useForm<z.infer<typeof addStoreSchema>>({
         resolver: zodResolver(addStoreSchema),
-        defaultValues: {name: ""}
+        defaultValues: {id:storeId.toString() , name: ""},
     });
     const onSubmit = (values: z.infer<typeof addStoreSchema>) => {
         setError("");
@@ -30,18 +33,19 @@ export const AddStore = () => {
                 setSuccess(data.success);
             });
         });
+        router.push(`/admin/store/${storeId}/dashboard`);
     };
     return (
         <CardWrapper headerTitle={"New Store"} headerLabel={"Add a new store"} backButtonLabel={"Back to Dashboard"} backButtonHref={"/admin/dashboard"} >
-            <Form {...form}>
+            <Form {...formInstance}>
                 <form
                     className={"space-y-6"}
-                    onSubmit={form.handleSubmit(onSubmit)}
+                    onSubmit={formInstance.handleSubmit(onSubmit)}
                 >
                     <div className={"space-y-4"}>
                         <FormField
                             name={"name"}
-                            control={form.control}
+                            control={formInstance.control}
                             render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>

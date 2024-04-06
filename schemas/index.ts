@@ -45,7 +45,12 @@ export const SettingSchema = z.object({
     }, {message: "password is required!", path: ["password"]});
 
 export const addStoreSchema = z.object( {
-   name: z.string().min(1,"Store Name")
+    name: z.string().min(1,"Store Name"),
+    id: z.string().min(1),
+});
+
+export const deleteStoreSchema = z.object({
+    id: z.string().min(1)
 });
 
 export const assignSellerSchema = z.object({
