@@ -40,7 +40,6 @@ export const AddOwnerForm = ({store, sellers}: AddOwnerProps) => {
         defaultValues: {storeId: id, userId: ""}
     });
     const onSubmit = (values: z.infer<typeof assignSellerSchema>) => {
-        console.log("values", values)
         setError("");
         setSuccess("");
         startTransition(() => {
@@ -49,6 +48,10 @@ export const AddOwnerForm = ({store, sellers}: AddOwnerProps) => {
                 setSuccess(data.success);
             });
         });
+         window.location.assign(`/admin/store/${store.id}/dashboard`); // owner is assigned and Dialog is closed
+        // router.refresh();  Owner is assigned Dialog is not closed
+        // router.push(`/admin/store/${store.id}/dashboard`);  Owner assigned and Dialog is not closed
+        // window.location.reload();  Owner is not assigned and Dialog closed
     };
     return (
         <CardWrapper headerTitle={"Assign Owner"} headerLabel={"Add a new seller to the store"} backButtonLabel={"Back to Stores"} backButtonHref={`/admin/stores`} >
