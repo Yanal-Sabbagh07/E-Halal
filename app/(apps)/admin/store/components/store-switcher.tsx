@@ -1,33 +1,43 @@
 "use client"
 
 import * as React from "react";
-import { usePathname } from 'next/navigation'
+import {usePathname} from 'next/navigation'
 import Link from "next/link";
 
 import {CaretSortIcon, CheckIcon} from "@radix-ui/react-icons";
 import {cn} from "@/lib/utils";
-import {Avatar, AvatarFallback, AvatarImage,} from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {useEffect} from "react";
+import {Ham, Store} from "lucide-react";
+import {Department} from "@prisma/client";
+import {GiPerfumeBottle} from "react-icons/gi";
 
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
 interface StoreSwitcherProps extends PopoverTriggerProps {
-    stores: { id: string; name: string; } [],
+    stores: { id: string; name: string; department: Department} [],
 }
 
 export function StoreSwitcher({className, stores}: StoreSwitcherProps) {
-    let storeId : string = "" ;
-    const pathname = usePathname();
-    const getStoreId = pathname.match(/^\/admin\/store\/(\d+)/);
-    if(getStoreId) {
-        storeId = getStoreId[1];
-    }
     const [open, setOpen] = React.useState(false);
-    const currentStore = stores.find((store) => storeId === store.id);
+    const pathname = usePathname();
+    const getStoreID = () => {
+        const path = pathname.match(/^\/admin\/store\/(\d+)/);
+        if (path) {
+            return path[1];
+        }
+        return "";
+    }
+    const storeId = getStoreID();
+    const currentStore = stores.find((store) => store.id === storeId);
     const [selectedStore, setSelectedStore] = React.useState({name: currentStore?.name, id: storeId});
+    useEffect(() => {
+        const currentStore = stores.find((store) => store.id === storeId);
+        setSelectedStore({name: currentStore?.name, id: storeId});
+    }, [storeId, stores]);
     return (
         <>
             <Popover open={open} onOpenChange={setOpen}>
@@ -39,14 +49,7 @@ export function StoreSwitcher({className, stores}: StoreSwitcherProps) {
                         aria-label="Select a team"
                         className={cn("w-[200px] justify-between", className)}
                     >
-                        <Avatar className="mr-2 h-5 w-5">
-                            <AvatarImage
-                                src={`https://avatar.vercel.sh/${selectedStore.name}.png`}
-                                alt={selectedStore.name}
-                                className="grayscale"
-                            />
-                            <AvatarFallback>SC</AvatarFallback>
-                        </Avatar>
+                        <Store className={"mr-2 h-5 w-5"} />
                         {selectedStore.name}
                         <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50"/>
                     </Button>
@@ -71,14 +74,7 @@ export function StoreSwitcher({className, stores}: StoreSwitcherProps) {
                                                     setOpen(false);
                                                 }}
                                             >
-                                                <Avatar className="mr-2 h-5 w-5">
-                                                    <AvatarImage
-                                                        src={`https://avatar.vercel.sh/${store.name}.png`}
-                                                        alt={store.name}
-                                                        className="grayscale"
-                                                    />
-                                                    <AvatarFallback>SC</AvatarFallback>
-                                                </Avatar>
+                                                {store.department === Department.Meat ? <Ham className={"mr-2 h-5 w-5"}/> : store.department === Department.Perfume ? <GiPerfumeBottle className={"mr-2 h-5 w-5"}/> : <Store className={"mr-2 h-5 w-5"}/>}
                                                 {store.name}
                                                 <CheckIcon
                                                     className={cn(

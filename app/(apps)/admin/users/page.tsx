@@ -91,7 +91,7 @@ const Users = async () => {
                                                         alt="Product image"
                                                         className="aspect-square rounded-md object-cover"
                                                         height="64"
-                                                        src={user.role === UserRole.CUSTOMER ? "/avatars/02.png" : "/avatars/04.png"}
+                                                        src={user.role === UserRole.CUSTOMER ? "/avatars/02.png" : user.role === UserRole.SELLER ? "/avatars/04.png" : "/avatars/yanal.png"}
                                                         width="64"
                                                     />
                                                 </TableCell>

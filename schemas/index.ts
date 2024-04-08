@@ -1,5 +1,6 @@
 import * as z from "zod";
 import {UserRole} from "@prisma/client";
+import {Department} from "@prisma/client";
 
 export const LoginSchema = z.object({
     email: z.string().email({message: "Email is required"}),
@@ -45,8 +46,9 @@ export const SettingSchema = z.object({
     }, {message: "password is required!", path: ["password"]});
 
 export const addStoreSchema = z.object( {
-    name: z.string().min(1,"Store Name"),
     id: z.string().min(1),
+    name: z.string().min(1,"Store Name"),
+    department: z.enum([Department.Supermarket, Department.Meat, Department.Perfume]),
 });
 
 export const deleteStoreSchema = z.object({

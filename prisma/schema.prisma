@@ -15,6 +15,39 @@ enum UserRole {
   CUSTOMER
 }
 
+enum Department {
+  Supermarket
+  Meat
+  Perfume
+}
+
+model Country {
+  id        String @id @default(cuid())
+  name      String
+  adresses  Address[]
+}
+
+model Address {
+  id              String @id @default(cuid())
+  city            String
+  street_name     String
+  house_number    String
+  postal_code     String
+  country         Country @relation(fields: [countryId], references: [id])
+  countryId       String
+  users           UsersAdresses[]
+  stores          StoresAddresses[]
+}
+
+model UsersAdresses {
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  addressId     String
+  address       Address   @relation(fields: [addressId], references: [id], onDelete: Cascade)
+
+  @@id([userId, addressId])
+}
+
 model User {
   id                    String    @id @default(cuid())
   name                  String?
@@ -27,23 +60,37 @@ model User {
   isTwoFactorEnabled    Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
   stores                UsersStores[]
+  addresses             UsersAdresses[]
+}
+model UsersStores {
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String   @default("cluorsuyt0000ybm38pbvlqio")// relation scalar field (used in the `@relation` attribute above)
+  store      Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  storeId    String   // relation scalar field (used in the `@relation` attribute above)
+  createdAt  DateTime  @default(now())
+
+  @@id([userId, storeId])
 }
 
 model Store {
   id                    String    @id @default(cuid())
   name                  String    @unique
+  department            Department
+  createdAt  DateTime   @default(now())
   users                 UsersStores[]
+  addresses             StoresAddresses[]
 }
 
-model UsersStores {
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String   @default("cluempynl0000ej1054ejwwc0")// relation scalar field (used in the `@relation` attribute above)
-  store      Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  storeId    String   // relation scalar field (used in the `@relation` attribute above)
-  createdAt DateTime  @default(now())
+model StoresAddresses {
+  storeId        String
+  store          Store      @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  addressId     String
+  address       Address   @relation(fields: [addressId], references: [id], onDelete: Cascade)
 
-  @@id([userId, storeId])
+  @@id([storeId, addressId])
 }
+
+
 
 model Account {
   id                 String  @id @default(cuid())

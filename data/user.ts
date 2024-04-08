@@ -1,5 +1,5 @@
 import {db} from "@/lib/db";
-import {UserRole} from "@prisma/client";
+import {Department, UserRole} from "@prisma/client";
 import {getStoreById} from "@/data/stores";
 
 export const getUserByEmail = async  (email: string) => {
@@ -38,8 +38,10 @@ export const getAllUsers = async () => {
     }
 };
 interface IStores {
-    id:string
-    name:string
+    id:string;
+    name:string;
+    department: Department;
+    createdAt: Date;
 }
 export const getUserStoresByUserId = async (id: string) => {
     try {
@@ -56,7 +58,7 @@ export const getUserStoresByUserId = async (id: string) => {
             }
             const store = await getStoreById(id);
             if(!store ){
-                return {id: "" , name: "" };
+                throw new Error("No Stores")
             }
             return store;
         }));

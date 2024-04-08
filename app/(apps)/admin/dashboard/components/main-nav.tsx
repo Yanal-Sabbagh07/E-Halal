@@ -16,7 +16,7 @@ export function MainNav({className, ...props}: React.HTMLAttributes<HTMLElement>
             {...props}
         >
             <Link
-                href="/admin/dashboard"
+                href={"/admin/dashboard"}
                 className={`${pathname === "/admin/dashboard" ? "" :"text-muted-foreground"} text-sm font-medium   transition-colors hover:text-primary`}
             >
                 Overview
@@ -28,19 +28,19 @@ export function MainNav({className, ...props}: React.HTMLAttributes<HTMLElement>
                 Stores
             </Link>
             <Link
-                href="/admin/users"
+                href={"/admin/users"}
                 className={`${pathname === "/admin/users" ? "" :"text-muted-foreground"} text-sm font-medium   transition-colors hover:text-primary`}
             >
                 Users
             </Link>
             <Link
-                href="/admin/products"
+                href={"/admin/products"}
                 className={`${pathname === "/admin/products" ? "" :"text-muted-foreground"} text-sm font-medium   transition-colors hover:text-primary`}
             >
                 Products
             </Link>
             <Link
-                href="/admin/settings"
+                href={"/admin/settings"}
                 className={`${pathname === "/admin/settings" ? "" :"text-muted-foreground"} text-sm font-medium   transition-colors hover:text-primary`}
             >
                 Settings

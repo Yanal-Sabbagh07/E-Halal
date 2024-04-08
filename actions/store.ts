@@ -8,18 +8,18 @@ export const addStore = async (values: z.infer<typeof addStoreSchema>) => {
     if (!validatedFields.success) {
         return {error: "Invalid fields!"};
     }
-    const {id,name} = validatedFields.data;
-    // const storeId = Date.now().toString();
+    const {id,name, department} = validatedFields.data;
     try {
         await db.store.create({
             data: {
                 id:id,
                 name,
+                department
             }
         });
-    } catch {
+    } catch (error) {
         return {
-            error: "name is already taken please use a different one!"
+            error: "Could not create a store! "
         }
     }
     try {
@@ -29,9 +29,9 @@ export const addStore = async (values: z.infer<typeof addStoreSchema>) => {
             }
         })
     } catch {
-        return {error: "Could not create usersStores"}
+        return {error: "Could not assign owner to the store!"}
     }
-    return {success: "Store Created!"}
+    return {success: "Store Created, and admin assigned as an owner!"}
 }
 
 export const deleteStore = async (values: z.infer<typeof deleteStoreSchema>) =>{

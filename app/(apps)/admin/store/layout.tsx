@@ -11,7 +11,6 @@ import AddOwnerButton from "@/app/(apps)/admin/store/components/add-owner-button
 
 interface IstoreLayoutProps {
     children: React.ReactNode,
-
 }
 
 const StoreLayout = async ({children}: IstoreLayoutProps) => {

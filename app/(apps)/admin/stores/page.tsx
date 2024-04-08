@@ -20,8 +20,7 @@ import {redirect} from "next/navigation";
 import Link from "next/link";
 import {DeleteStoreMenuItem} from "@/app/(apps)/admin/stores/components/delete-store-menu-item";
 
-
-const Users = async () => {
+const StoresPage = async () => {
     const userId = await currentUserId();
     if (!userId) {
         redirect("/auth/login");
@@ -72,7 +71,7 @@ const Users = async () => {
                                             <span className="sr-only">Image</span>
                                         </TableHead>
                                         <TableHead>Name</TableHead>
-                                        <TableHead>Category</TableHead>
+                                        <TableHead>Department</TableHead>
                                         <TableHead className="hidden md:table-cell">City</TableHead>
                                         <TableHead className="hidden md:table-cell">Created at</TableHead>
                                         <TableHead className="hidden md:table-cell">Updated at</TableHead>
@@ -104,13 +103,13 @@ const Users = async () => {
                                                 </Link>
                                             </TableCell>
                                             <TableCell>
-                                                {"XYZ"}
+                                                {store.department}
                                             </TableCell>
                                             <TableCell className="hidden md:table-cell">
                                                 {"XYZ"}
                                             </TableCell>
                                             <TableCell className="hidden md:table-cell">
-                                                {"XXX"}
+                                                {store.createdAt.toLocaleDateString()}
                                             </TableCell>
                                             <TableCell className="hidden md:table-cell">
                                                 {"XXX"}
@@ -152,4 +151,4 @@ const Users = async () => {
     );
 };
 
-export default Users;
+export default StoresPage;
