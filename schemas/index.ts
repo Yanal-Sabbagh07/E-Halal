@@ -58,4 +58,14 @@ export const deleteStoreSchema = z.object({
 export const assignSellerSchema = z.object({
     userId: z.string().min(1),
     storeId: z.string().min(1)
-})
+});
+
+export const createStoreAddressSchema = z.object({
+    id: z.optional(z.string().min(1)),
+    city: z.string().min(1),
+    street_name: z.string().min(1),
+    house_number: z.string().min(1),
+    postal_code : z.string().min(1),
+    countryId: z.string().min(1),
+    storeId: z.string().min(1),
+});

@@ -42,3 +42,24 @@ export const getStoreUsersByStorId = async (id: string) => {
         return null;
     }
 }
+
+export const getAllCountries = async () => {
+    try {
+        return await db.country.findMany();
+    }
+    catch {
+        return null;
+    }
+}
+export const getCountryByName = async (name: string) => {
+    try {
+        return await db.country.findUnique({
+            where: {
+                name,
+            }
+        });
+    }
+    catch {
+        return null;
+    }
+}

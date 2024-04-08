@@ -1,6 +1,6 @@
 "use server";
 import {z} from "zod";
-import {addStoreSchema, deleteStoreSchema} from "@/schemas";
+import {addStoreSchema, createStoreAddressSchema, deleteStoreSchema} from "@/schemas";
 import {db} from "@/lib/db";
 
 export const addStore = async (values: z.infer<typeof addStoreSchema>) => {
@@ -53,3 +53,39 @@ export const deleteStore = async (values: z.infer<typeof deleteStoreSchema>) =>{
     }
     return {success: "Store Deleted!"}
 };
+
+export const addStoreAddress = async (values: z.infer<typeof createStoreAddressSchema>) => {
+    const validatedFields = createStoreAddressSchema.safeParse(values);
+    if (!validatedFields.success) {
+        return {error: "Invalid fields!"};
+    }
+    const {city, street_name, house_number, postal_code, countryId, storeId} = validatedFields.data;
+    const addressId = Date.now().toString();
+    try {
+        await db.address.create({
+            data: {
+                id:addressId,
+                city,
+                street_name,
+                house_number,
+                postal_code,
+                countryId,
+            }
+        });
+    } catch (error) {
+        return {
+            error: "Could not create an address!"
+        }
+    }
+    try {
+        await db.storesAddresses.create({
+            data: {
+                storeId:storeId,
+                addressId:addressId,
+            }
+        })
+    } catch {
+        return {error: "Couldn't assign the address to the store!-"}
+    }
+    return {success: "Address Created, and assigned to the Store!"}
+}
