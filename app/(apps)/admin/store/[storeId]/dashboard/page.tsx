@@ -7,7 +7,7 @@ interface IStorePageProps {
 }
 const StorePage = async ({params}: IStorePageProps) => {
     const storeId = params.storeId;
-    const store = await db.store.findFirst({
+    const store = await db.store.findUnique({
         where:{
             id: storeId,
         }
@@ -15,7 +15,6 @@ const StorePage = async ({params}: IStorePageProps) => {
     if(!store){
         redirect('/admin/stores');
     }
-
     return (
         <div className={"flex min-h-[calc(100vh-212px)] w-full flex-col items-center justify-center bg-accent rounded-xl"}>
             <div className={""}>
