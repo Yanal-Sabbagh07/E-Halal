@@ -7,6 +7,8 @@ import {getUsersByRole, getUserStoresByUserId} from "@/data/user";
 import {UserRole} from "@prisma/client";
 import {StoreSwitcher} from "@/app/(apps)/admin/store/components/store-switcher";
 import AddOwnerButton from "@/app/(apps)/admin/store/components/add-owner-button";
+import {getAllCountries} from "@/data/stores";
+import AddAddressButton from "@/app/(apps)/admin/store/components/add-address-button";
 
 
 interface IstoreLayoutProps {
@@ -25,14 +27,18 @@ const StoreLayout = async ({children}: IstoreLayoutProps) => {
     }
     const userStores = await getUserStoresByUserId(userId);
     const allSellers = await getUsersByRole(UserRole.SELLER);
+    const allCountries = await getAllCountries();
+    console.log("Countries", allCountries);
     return (
         <>
             <MaxWidthWrapper className={"border rounded-xl h-14"}>
                 <div className={"w-full h-full rounded-xl flex flex-row items-center justify-center"}>
-                    {userStores ? <StoreSwitcher stores={userStores} /> :
+                    {userStores ? <StoreSwitcher stores={userStores}/> :
                         <span className={"border px-3 py-1 rounded-xl text-sm"}>No stores!</span>}
+
                     <div className={"ml-auto flex items-center gap-2"}>
-                        {userStores && allSellers ?  <AddOwnerButton stores={userStores} sellers={allSellers} /> : ""}
+                        {userStores && allCountries ? <AddAddressButton stores={userStores} countries={allCountries}/> : ""}
+                        {userStores && allSellers ? <AddOwnerButton stores={userStores} sellers={allSellers}/> : ""}
                     </div>
                 </div>
             </MaxWidthWrapper>
