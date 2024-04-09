@@ -9,9 +9,10 @@ interface AddStoreBtnProps {
     asChild?: boolean;
     id: string;
     name: string;
+    addressId : string;
 }
 
-const DeleteStoreButton = ({id,name, children, mode = "modal", asChild}: AddStoreBtnProps) => {
+const DeleteStoreButton = ({id,name, addressId ,children, mode = "modal", asChild}: AddStoreBtnProps) => {
     if (mode === "modal") {
         return (
             <Dialog>
@@ -19,7 +20,7 @@ const DeleteStoreButton = ({id,name, children, mode = "modal", asChild}: AddStor
                     {children}
                 </DialogTrigger>
                 <DialogContent className={"p-0 w-auto bg-transparent border-none"}>
-                    <DeleteStoreForm id={id} name={name}/>
+                    <DeleteStoreForm id={id} name={name} addressId={addressId}/>
                 </DialogContent>
             </Dialog>
         )

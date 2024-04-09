@@ -7,9 +7,10 @@ interface AddStoreBtnProps {
     children: React.ReactNode;
     mode?: "modal" | "redirect";
     asChild?: boolean;
+    countries: { id: string, name: string }[],
 }
 
-const AddStoreBtn = ({children, mode = "modal", asChild}: AddStoreBtnProps) => {
+const AddStoreBtn = ({children, mode = "modal", asChild, countries}: AddStoreBtnProps) => {
     if (mode === "modal") {
         return (
             <Dialog>
@@ -17,7 +18,7 @@ const AddStoreBtn = ({children, mode = "modal", asChild}: AddStoreBtnProps) => {
                     {children}
                 </DialogTrigger>
                 <DialogContent className={"p-0 w-auto bg-transparent border-none"}>
-                    <AddStoreForm />
+                    <AddStoreForm countries = {countries} />
                 </DialogContent>
             </Dialog>
         )

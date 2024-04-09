@@ -42,6 +42,7 @@ interface IStores {
     name:string;
     department: Department;
     createdAt: Date;
+    addressId: string;
 }
 export const getUserStoresByUserId = async (id: string) => {
     try {

@@ -19,6 +19,7 @@ import {currentUserId} from "@/lib/auth";
 import {redirect} from "next/navigation";
 import Link from "next/link";
 import {DeleteStoreMenuItem} from "@/app/(apps)/admin/stores/components/delete-store-menu-item";
+import {getAllCountries} from "@/data/stores";
 
 const StoresPage = async () => {
     const userId = await currentUserId();
@@ -26,6 +27,8 @@ const StoresPage = async () => {
         redirect("/auth/login");
     }
     const stores = await getUserStoresByUserId(userId);
+    const allCountries = await getAllCountries();
+
     return (
         <main className="">
             <Tabs defaultValue="ALL">
@@ -50,12 +53,12 @@ const StoresPage = async () => {
                             <File className="h-3.5 w-3.5"/>
                             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Export</span>
                         </Button>
-                        <Button size="sm" className="h-8 gap-1">
+                        {allCountries && <Button size="sm" className="h-8 gap-1">
                             <PlusCircle className="h-3.5 w-3.5"/>
-                            <AddStoreBtn asChild>
+                            <AddStoreBtn countries={allCountries} asChild>
                                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Add Store</span>
                             </AddStoreBtn>
-                        </Button>
+                        </Button>}
                     </div>
                 </div>
                 <TabsContent value="ALL">
@@ -129,7 +132,7 @@ const StoresPage = async () => {
                                                     <DropdownMenuContent align="end">
                                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                                         <DropdownMenuItem>Edit</DropdownMenuItem>
-                                                        <DeleteStoreMenuItem name={store.name} id={store.id} />
+                                                        <DeleteStoreMenuItem name={store.name} id={store.id}  addressId ={store.addressId}/>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </TableCell>
