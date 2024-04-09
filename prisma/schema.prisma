@@ -36,7 +36,7 @@ model Address {
   country         Country @relation(fields: [countryId], references: [id])
   countryId       String
   users           UsersAdresses[]
-  stores          StoresAddresses[]
+  store           Store?
 }
 
 model UsersAdresses {
@@ -78,16 +78,9 @@ model Store {
   department            Department
   createdAt  DateTime   @default(now())
   users                 UsersStores[]
-  addresses             StoresAddresses[]
-}
 
-model StoresAddresses {
-  storeId        String
-  store          Store      @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  addressId     String
-  address       Address   @relation(fields: [addressId], references: [id], onDelete: Cascade)
-
-  @@id([storeId, addressId])
+  addressId             String @unique
+  address               Address @relation(fields: [addressId], references: [id])
 }
 
 

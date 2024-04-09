@@ -11,14 +11,14 @@ import {Input} from "@/components/ui/input";
 import {FormError} from "@/components/form-error";
 import {FormSuccess} from "@/components/form-success";
 import {Button} from "@/components/ui/button";
-export const DeleteStoreForm = ({id, name}: { id: string, name: string }) => {
+export const DeleteStoreForm = ({id, name, addressId}: { id: string, name: string, addressId:string }) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
     const form = useForm<z.infer<typeof deleteStoreSchema>>({
         resolver: zodResolver(deleteStoreSchema),
-        defaultValues: {id: id}
+        defaultValues: {id: id, addressId:addressId}
     });
     const onSubmit = (values: z.infer<typeof deleteStoreSchema>) => {
         setError("");
