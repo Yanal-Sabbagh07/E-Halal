@@ -1,6 +1,6 @@
 "use server";
 import {z} from "zod";
-import {createStoreSchema, deleteStoreSchema} from "@/schemas";
+import {createBillboardSchema, createStoreSchema, deleteBillboardSchema, deleteStoreSchema} from "@/schemas";
 import {db} from "@/lib/db";
 
 export const addStore = async (values: z.infer<typeof createStoreSchema>) => {
@@ -8,12 +8,12 @@ export const addStore = async (values: z.infer<typeof createStoreSchema>) => {
     if (!validatedFields.success) {
         return {error: "Invalid fields!"};
     }
-    const {id,name, department,street_name,house_number,postal_code,countryId,city} = validatedFields.data;
+    const {id, name, department, street_name, house_number, postal_code, countryId, city} = validatedFields.data;
     const addressId = Date.now().toString();
     try {
         await db.address.create({
             data: {
-                id:addressId,
+                id: addressId,
                 city,
                 street_name,
                 house_number,
@@ -43,7 +43,7 @@ export const addStore = async (values: z.infer<typeof createStoreSchema>) => {
     try {
         await db.usersStores.create({
             data: {
-                storeId:id,
+                storeId: id,
             }
         })
     } catch {
@@ -52,7 +52,7 @@ export const addStore = async (values: z.infer<typeof createStoreSchema>) => {
     return {success: "Store Created, and admin assigned as an owner!"}
 }
 
-export const deleteStore = async (values: z.infer<typeof deleteStoreSchema>) =>{
+export const deleteStore = async (values: z.infer<typeof deleteStoreSchema>) => {
     const validatedFields = deleteStoreSchema.safeParse(values);
     if (!validatedFields.success) {
         return {error: "Invalid fields!"};
@@ -82,3 +82,73 @@ export const deleteStore = async (values: z.infer<typeof deleteStoreSchema>) =>{
     }
     return {success: "Store Deleted!"}
 };
+
+
+export const CreateBillBoard = async (values: z.infer<typeof createBillboardSchema>) => {
+    const validatedFields = createBillboardSchema.safeParse(values);
+    if (!validatedFields.success) {
+        return {error: "Invalid fields!"};
+    }
+    const {id, label, imageUrl, storeId} = validatedFields.data;
+    try {
+        await db.billBoard.create({
+            data: {
+                id,
+                label,
+                imageUrl,
+                storeId,
+            }
+        });
+    } catch (error) {
+        return {
+            error: "Could not create the Billboard!"
+        }
+    }
+    return {success: "Billboard Created Successfully!"}
+}
+
+export const EditBillBoard = async (values: z.infer<typeof createBillboardSchema>) => {
+    const validatedFields = createBillboardSchema.safeParse(values);
+    if (!validatedFields.success) {
+        return {error: "Invalid fields!"};
+    }
+    const {id, label, imageUrl, storeId} = validatedFields.data;
+    try {
+        await db.billBoard.update({
+            where: {
+                id,
+            },
+            data: {
+                id,
+                label,
+                imageUrl,
+                storeId,
+            }
+        });
+    } catch (error) {
+        return {
+            error: "Could not Update the Billboard!"
+        }
+    }
+    return {success: "Billboard Updated Successfully!"}
+}
+
+export const DeleteBillBoard = async (values: z.infer<typeof deleteBillboardSchema>) => {
+    const validatedFields = deleteBillboardSchema.safeParse(values);
+    if (!validatedFields.success) {
+        return {error: "Invalid fields!"};
+    }
+    const {id} = validatedFields.data;
+    try {
+        await db.billBoard.delete({
+            where: {
+                id,
+            }
+        });
+    } catch (error) {
+        return {
+            error: "Could not Delete the Billboard!"
+        }
+    }
+    return {success: "Billboard Updated Successfully!"}
+}
