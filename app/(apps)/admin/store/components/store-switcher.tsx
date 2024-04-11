@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react";
-import {usePathname} from 'next/navigation'
+import {useParams} from 'next/navigation'
 import Link from "next/link";
 
 import {CaretSortIcon, CheckIcon} from "@radix-ui/react-icons";
@@ -23,15 +23,8 @@ interface StoreSwitcherProps extends PopoverTriggerProps {
 
 export function StoreSwitcher({className, stores}: StoreSwitcherProps) {
     const [open, setOpen] = React.useState(false);
-    const pathname = usePathname();
-    const getStoreID = () => {
-        const path = pathname.match(/^\/admin\/store\/(\d+)/);
-        if (path) {
-            return path[1];
-        }
-        return "";
-    }
-    const storeId = getStoreID();
+    const params = useParams();
+    const {storeId} = params;
     const currentStore = stores.find((store) => store.id === storeId);
     const [selectedStore, setSelectedStore] = React.useState({name: currentStore?.name, id: storeId});
     useEffect(() => {
