@@ -4,14 +4,13 @@ import React, {useState, useTransition} from 'react';
 import {useForm} from "react-hook-form";
 import {z} from "zod";
 
-import { createBillboardSchema} from "@/schemas";
+import {createBillboardSchema} from "@/schemas";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {CardWrapper} from "@/components/auth/card-wrapper";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {FormError} from "@/components/form-error";
 import {FormSuccess} from "@/components/form-success";
 import {Button} from "@/components/ui/button";
-import {Select, SelectContent, SelectTrigger, SelectValue} from "@/components/ui/select";
 
 import {Input} from "@/components/ui/input";
 import {CreateBillBoard, EditBillBoard} from "@/actions/store";
@@ -19,7 +18,7 @@ import ImageUpload from "@/components/ui/image-upload";
 import {useRouter} from "next/navigation";
 
 interface ICreateBillboardFormProps {
-    storeId : string;
+    storeId: string;
     billBoard: {
         id: string;
         label: string;
@@ -29,19 +28,20 @@ interface ICreateBillboardFormProps {
         updatedAt: Date;
     } | null
 }
-export const CreateBillboardForm = ({billBoard, storeId}: ICreateBillboardFormProps ) => {
+
+export const CreateBillboardForm = ({billBoard, storeId}: ICreateBillboardFormProps) => {
     console.log(billBoard);
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
-    const router = useRouter();
     const form = useForm<z.infer<typeof createBillboardSchema>>({
         resolver: zodResolver(createBillboardSchema),
         defaultValues: {
             id: billBoard?.id || Date.now().toString(),
             label: billBoard?.label || "",
             storeId: storeId,
-            imageUrl: billBoard?.imageUrl || ""}
+            imageUrl: billBoard?.imageUrl || ""
+        }
     });
     const onSubmit = (values: z.infer<typeof createBillboardSchema>) => {
         setError("");
@@ -51,18 +51,20 @@ export const CreateBillboardForm = ({billBoard, storeId}: ICreateBillboardFormPr
                 CreateBillBoard(values).then((data) => {
                     setError(data.error);
                     setSuccess(data.success);
-                    if(data.success){
-                       window.location.reload();
+                    if (data.success) {
+                        window.location.reload();
+                    }
+                });
+            } else {
+                EditBillBoard(values).then((data) => {
+                    setError(data.error);
+                    setSuccess(data.success);
+                    if (data.success) {
+                        window.location.assign(`/admin/store/${storeId}/billboards`);
                     }
                 });
             }
-            EditBillBoard(values).then((data) => {
-                setError(data.error);
-                setSuccess(data.success);
-                if(data.success){
-                    window.location.assign(`/admin/store/${storeId}/billboards`);
-                }
-            })
+
         });
 
         //window.location.assign(`/admin/store/${store.id}/dashboard`); // owner is assigned and Dialog is closed
@@ -70,8 +72,8 @@ export const CreateBillboardForm = ({billBoard, storeId}: ICreateBillboardFormPr
     // const onDelete = (values: z.infer<typeof deleteBillboardSchema>) => {};
     return (
         <CardWrapper
-            headerTitle={billBoard ? "Edit Billboard" : "Create Billboard" }
-            headerLabel={billBoard ? "Edit this Billboard" : "Create a new Billboard to the store" }
+            headerTitle={billBoard ? "Edit Billboard" : "Create Billboard"}
+            headerLabel={billBoard ? "Edit this Billboard" : "Create a new Billboard to the store"}
             backButtonLabel={"Back to Billboard"}
             backButtonHref={`/admin/store/${storeId}/billboards`}
             className={"w-full"}
@@ -111,16 +113,17 @@ export const CreateBillboardForm = ({billBoard, storeId}: ICreateBillboardFormPr
                                             onChange={(url) => field.onChange(url)}
                                             onRemove={(url) => field.onChange("")}
                                             value={field.value ? [field.value] : []}
-                                            disabled={false} />
+                                            disabled={false}/>
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
                             )}
                         />
                     </div>
-                    <FormError message={error} />
-                    <FormSuccess message={success} />
-                    <Button className={"w-full"} type={"submit"} disabled={isPending}>{billBoard ? "Update" : "Create"}</Button>
+                    <FormError message={error}/>
+                    <FormSuccess message={success}/>
+                    <Button className={"w-full"} type={"submit"}
+                            disabled={isPending}>{billBoard ? "Update" : "Create"}</Button>
                 </form>
             </Form>
         </CardWrapper>
