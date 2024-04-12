@@ -13,7 +13,7 @@ interface AddStoreBtnProps {
 const AddStoreBtn = ({children, mode = "modal", asChild, countries}: AddStoreBtnProps) => {
     if (mode === "modal") {
         return (
-            <Dialog>
+            <Dialog >
                 <DialogTrigger asChild={asChild}>
                     {children}
                 </DialogTrigger>

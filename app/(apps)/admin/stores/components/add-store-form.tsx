@@ -374,7 +374,7 @@ export const AddStoreForm = ({countries} : addStoreProps) => {
         });
     };
     return (
-        <CardWrapper headerTitle={"Create New Store"} headerLabel={""} backButtonLabel={"Back to stores"} backButtonHref={"/admin/store/1/dashboard"}>
+        <CardWrapper className={"w-[600px]"} headerTitle={"Create New Store"} headerLabel={""} backButtonLabel={"Back to stores"} backButtonHref={"/admin/store/1/dashboard"}>
             <Form {...form}>
                 <form
                     className={"space-y-6"}

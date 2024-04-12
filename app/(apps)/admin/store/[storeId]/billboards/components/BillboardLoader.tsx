@@ -7,7 +7,6 @@ import {Plus} from "lucide-react";
 import Heading from "@/components/ui/heading";
 import {Button} from "@/components/ui/button";
 import {Separator} from "@/components/ui/separator";
-import {db} from "@/lib/db";
 import {BillboardCoulumn, columns} from "@/app/(apps)/admin/store/[storeId]/billboards/components/coulumns";
 import {DataTable} from "@/components/ui/data-table";
 interface BillBoardLoaderProps {
@@ -21,7 +20,10 @@ const BillBoardLoader = ({billboard} : BillBoardLoaderProps) => {
         <>
             <div className={"flex items-center justify-between mb-2"}>
                 <Heading title={`Billboards ${billboard?.length}`} description={"Manage billboards of the store"}/>
-                <Button onClick={()=> router.push(`/admin/store/${params.storeId}/billboards/new`)}>
+                <Button
+                    size={"sm"}
+                    onClick={()=> router.push(`/admin/store/${params.storeId}/billboards/new`)}
+                >
                     <Plus className={"mr-2 h-4 w-4"}/>
                     Add New
                 </Button>
