@@ -17,7 +17,7 @@ const BillboardPage = async ({params} : IBillboardPageProps) => {
     return (
         <div className={"flex-col"}>
             <div className={"flex-1 space-y-4 pt-6 pb-6"}>
-                {params.storeId && <CreateBillboardForm storeId={params.storeId} billBoard={billBoard}/>}
+                {params.storeId && <CreateBillboardForm storeId={params.storeId} category={billBoard}/>}
             </div>
         </div>
     );

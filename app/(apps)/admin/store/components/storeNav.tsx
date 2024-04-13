@@ -7,8 +7,6 @@ import {cn} from "@/lib/utils";
 const StoreNavBar = ({className,...props}: React.HTMLAttributes<HTMLElement>) => {
     const pathname = usePathname();
     const params = useParams();
-    // console.log("Pathname:", pathname);
-    // console.log("Params:", params);
     const routes = [
         {
             href: `/admin/store/${params.storeId}/dashboard`,
@@ -17,8 +15,13 @@ const StoreNavBar = ({className,...props}: React.HTMLAttributes<HTMLElement>) =>
         },
         {
             href: `/admin/store/${params.storeId}/billboards`,
-            label: 'BillBoards',
+            label: 'Billboards',
             active: pathname === `/admin/store/${params.storeId}/billboards`
+        },
+        {
+            href: `/admin/store/${params.storeId}/categories`,
+            label: 'Categories',
+            active: pathname === `/admin/store/${params.storeId}/categories`
         }
     ]
     return (

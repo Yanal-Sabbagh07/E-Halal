@@ -77,11 +77,12 @@ model Store {
   name                  String    @unique
   department            Department
   createdAt  DateTime   @default(now())
-  users                 UsersStores[]
-
   addressId             String @unique
+
   address               Address @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  users                 UsersStores[]
   billboards            BillBoard[]
+  categories            Category[]
 }
 
 model BillBoard {
@@ -91,7 +92,20 @@ model BillBoard {
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
   storeId               String
+
   store                 Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  categories            Category[]
+}
+
+model Category {
+  id                    String    @id @default(cuid())
+  name                  String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  storeId               String
+  store                 Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  billboardId           String
+  BillBoard             BillBoard @relation(fields: [billboardId], references: [id], onDelete: Cascade)
 }
 
 

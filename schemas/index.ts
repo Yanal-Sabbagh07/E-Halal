@@ -76,3 +76,21 @@ export const createBillboardSchema = z.object({
 export const deleteBillboardSchema = z.object({
     id: z.string().min(1),
 });
+
+export const createCategorySchema = z.object({
+    id: z.optional(z.string().min(1)),
+    name: z.string().min(1),
+    storeId: z.string().min(1),
+    billboardId: z.string().min(1),
+});
+
+export const updateCategorySchema = z.object({
+    id: z.optional(z.string().min(1)),
+    name: z.string().min(1),
+    storeId: z.string().min(1),
+    billboardId: z.string().min(1),
+});
+
+export const deleteCategorySchema = z.object({
+    id: z.string().min(1),
+});

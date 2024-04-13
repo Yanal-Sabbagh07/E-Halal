@@ -14,9 +14,11 @@ import {Button} from "@/components/ui/button";
 import {Delete, Edit, MoreHorizontal, Trash} from "lucide-react";
 import {useParams, usePathname, useRouter} from "next/navigation";
 import {DeleteBillBoard} from "@/actions/billboard";
+import {CategoryColumn} from "@/app/(apps)/admin/store/[storeId]/categories/components/coulumns";
+import {DeleteCategory} from "@/actions/category";
 
 interface CellActionProps {
-    data: BillboardCoulumn;
+    data: CategoryColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({data}) => {
@@ -30,7 +32,7 @@ export const CellAction: React.FC<CellActionProps> = ({data}) => {
         setError("");
         setSuccess("");
         startTransition(() => {
-            DeleteBillBoard({id: data.id}).then((res) => {
+            DeleteCategory({id: data.id}).then((res) => {
                 if(res.success){
                     window.location.reload();
                 }
@@ -39,20 +41,19 @@ export const CellAction: React.FC<CellActionProps> = ({data}) => {
         });
     }
     const onUpdate = () => {
-
     }
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant={"ghost"} className={"h-8 w-8 p-0"}>
-                    <span className={"sr-only"}> Open Menu</span>
+                    <span className={"sr-only"}> Open Menu </span>
                     <MoreHorizontal className={"h-4 w-4"}/>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align={"end"}>
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator/>
-                <DropdownMenuItem onClick={() => router.push(`/admin/store/${storeId}/billboards/${data.id}`)}>
+                <DropdownMenuItem onClick={() => router.push(`/admin/store/${storeId}/categories/${data.id}`)}>
                     <Edit className={"h-4 w-4 mr-2"}/>
                     Update
                 </DropdownMenuItem>
