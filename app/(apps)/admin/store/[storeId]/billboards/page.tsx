@@ -19,6 +19,7 @@ const BillboardsPage = async ({params}: BillboardPageProps) => {
     }
     });
     const formattedBillboard : BillboardCoulumn[] = billboards.map((item) => ({
+        imageUrl: item.imageUrl,
         id: item.id,
         label:item.label,
         createdAt: format(item.createdAt, "do MMMM yyyy"),

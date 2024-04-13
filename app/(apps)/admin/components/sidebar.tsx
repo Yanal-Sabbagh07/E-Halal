@@ -7,7 +7,7 @@ import SideBarMenu from "@/app/(apps)/admin/components/menu";
 
 export const SideBar = () => {
     return (
-        <div className={"w-[300px] min-h-[calc(100vh-32px)] flex flex-col p-4 gap-4 rounded-xl border bg-card text-card-foreground shadow"}>
+        <div className={"w-[316px] min-h-[calc(100vh-32px)] flex flex-col p-4 gap-4 rounded-xl border bg-card text-card-foreground shadow"}>
             <div>
                 <UserItem />
             </div>

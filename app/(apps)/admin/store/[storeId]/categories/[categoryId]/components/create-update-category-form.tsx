@@ -4,7 +4,7 @@ import React, {useState, useTransition} from 'react';
 import {useForm} from "react-hook-form";
 import {z} from "zod";
 
-import {createBillboardSchema} from "@/schemas";
+import {createBillboardSchema, createCategorySchema} from "@/schemas";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {CardWrapper} from "@/components/auth/card-wrapper";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
@@ -16,38 +16,48 @@ import {Input} from "@/components/ui/input";
 import {CreateBillBoard, EditBillBoard} from "@/actions/billboard";
 import ImageUpload from "@/components/ui/image-upload";
 import {useRouter} from "next/navigation";
+import {CreateCategory, EditCategory} from "@/actions/category";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 
 interface ICreateBillboardFormProps {
     storeId: string;
     category: {
         id: string;
-        label: string;
-        imageUrl: string;
+        name: string;
+        billboardId: string;
         storeId: string;
         createdAt: Date;
         updatedAt: Date;
-    } | null
+    } | null,
+    billBoards: {
+        id: string;
+        label: string;
+        imageUrl: string;
+        createdAt: Date;
+        updatedAt: Date;
+        storeId: string;
+    }[] | null
 }
 
-export const CreateBillboardForm = ({category, storeId}: ICreateBillboardFormProps) => {
+export const CreateUpdateCategoryForm = ({billBoards,category, storeId}: ICreateBillboardFormProps) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
-    const form = useForm<z.infer<typeof createBillboardSchema>>({
-        resolver: zodResolver(createBillboardSchema),
+    const form = useForm<z.infer<typeof createCategorySchema>>({
+        resolver: zodResolver(createCategorySchema),
         defaultValues: {
             id: category?.id || Date.now().toString(),
-            label: category?.label || "",
+            name: category?.name || "",
+            billboardId: category?.billboardId || "",
             storeId: storeId,
-            imageUrl: category?.imageUrl || ""
         }
     });
-    const onSubmit = (values: z.infer<typeof createBillboardSchema>) => {
+    const onSubmit = (values: z.infer<typeof createCategorySchema>) => {
         setError("");
         setSuccess("");
         startTransition(() => {
             if (!category) {
-                CreateBillBoard(values).then((data) => {
+                CreateCategory(values).then((data) => {
                     setError(data.error);
                     setSuccess(data.success);
                     if (data.success) {
@@ -55,11 +65,11 @@ export const CreateBillboardForm = ({category, storeId}: ICreateBillboardFormPro
                     }
                 });
             } else {
-                EditBillBoard(values).then((data) => {
+                EditCategory(values).then((data) => {
                     setError(data.error);
                     setSuccess(data.success);
                     if (data.success) {
-                        window.location.assign(`/admin/store/${storeId}/billboards`);
+                        window.location.assign(`/admin/store/${storeId}/categories`);
                     }
                 });
             }
@@ -71,10 +81,10 @@ export const CreateBillboardForm = ({category, storeId}: ICreateBillboardFormPro
     // const onDelete = (values: z.infer<typeof deleteBillboardSchema>) => {};
     return (
         <CardWrapper
-            headerTitle={category ? "Edit Billboard" : "Create Billboard"}
-            headerLabel={category ? "Edit this Billboard" : "Create a new Billboard to the store"}
-            backButtonLabel={"Back to Billboard"}
-            backButtonHref={`/admin/store/${storeId}/billboards`}
+            headerTitle={category ? "Edit Category" : "Create Category"}
+            headerLabel={category ? "Edit this Category" : "Create a new Category to the store"}
+            backButtonLabel={"Back to categories"}
+            backButtonHref={`/admin/store/${storeId}/categories`}
             className={"w-full"}
         >
             <Form {...form}>
@@ -84,7 +94,7 @@ export const CreateBillboardForm = ({category, storeId}: ICreateBillboardFormPro
                 >
                     <div className={"space-y-4"}>
                         <FormField
-                            name={"label"}
+                            name={"name"}
                             control={form.control}
                             render={({field}) => (
                                 <FormItem>
@@ -102,19 +112,27 @@ export const CreateBillboardForm = ({category, storeId}: ICreateBillboardFormPro
                             )}
                         />
                         <FormField
-                            name={"imageUrl"}
                             control={form.control}
-                            render={({field}) => (
+                            name="billboardId"
+                            render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Background Image</FormLabel>
-                                    <FormControl>
-                                        <ImageUpload
-                                            onChange={(url) => field.onChange(url)}
-                                            onRemove={(url) => field.onChange("")}
-                                            value={field.value ? [field.value] : []}
-                                            disabled={false}/>
-                                    </FormControl>
-                                    <FormMessage/>
+                                    <FormLabel>Billboard</FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a seller" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {billBoards?.map(billBoard => (
+                                                <SelectItem key={billBoard.id} value={billBoard.id}>
+                                                    {billBoard.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
